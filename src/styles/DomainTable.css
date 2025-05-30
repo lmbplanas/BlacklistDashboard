@@ -1,0 +1,81 @@
+.domain-table .card {
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.table-title {
+  color: #2c3e50;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.domain-data-table {
+  margin-bottom: 0;
+}
+
+.sortable-header {
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.sortable-header:hover {
+  background-color: #f8f9fa;
+}
+
+.domain-cell {
+  font-family: monospace;
+  font-weight: 600;
+}
+
+.status-cell {
+  text-align: center;
+  width: 80px;
+}
+
+.status-indicator {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.2rem;
+}
+
+.status-indicator.blocked {
+  color: #28a745;
+}
+
+.status-indicator.pending {
+  color: #dc3545;
+}
+
+.status-indicator.overdue {
+  color: #fd7e14;
+}
+
+.countdown {
+  font-size: 0.7rem;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .table-responsive {
+    border-radius: 8px;
+  }
+  
+  .domain-data-table th,
+  .domain-data-table td {
+    white-space: nowrap;
+  }
+  
+  /* For very small screens, hide less important columns */
+  @media (max-width: 576px) {
+    .domain-data-table th:nth-child(2),
+    .domain-data-table td:nth-child(2),
+    .domain-data-table th:nth-child(3),
+    .domain-data-table td:nth-child(3) {
+      display: none;
+    }
+  }
+}

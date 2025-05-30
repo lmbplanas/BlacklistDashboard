@@ -1,0 +1,57 @@
+.dashboard-header {
+  margin-bottom: 20px;
+  padding: 15px 0;
+}
+
+.dashboard-title {
+  color: #2c3e50;
+  margin-bottom: 0;
+  font-weight: 600;
+}
+
+.search-container {
+  max-width: 250px;
+}
+
+.last-updated-container {
+  margin-left: 15px;
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+.refresh-button {
+  color: #6c757d;
+}
+
+.refresh-button:hover {
+  color: #2c3e50;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .dashboard-header {
+    text-align: center;
+    padding: 10px 0;
+  }
+  
+  .search-container {
+    max-width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  .last-updated-container {
+    margin-left: 0;
+    justify-content: center;
+    width: 100%;
+    margin-top: 10px;
+  }
+}

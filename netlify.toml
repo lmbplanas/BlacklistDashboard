@@ -1,0 +1,16 @@
+[build]
+  publish = "public"
+  command = "echo 'No build command needed for static site'"
+
+# Make index-egov.html the main page
+[[redirects]]
+  from = "/*"
+  to = "/index-egov.html"
+  status = 200
+
+# Also copy index-egov.html to index.html to ensure it loads as default
+[build.processing]
+  skip_processing = false
+
+[build.processing.html]
+  pretty_urls = true
