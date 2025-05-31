@@ -78,7 +78,8 @@
   to { transform: rotate(360deg); }
 }
 
-.spin {
+.spin-container {
+  display: inline-block;
   animation: spin 1s linear infinite;
 }
 

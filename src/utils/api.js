@@ -6,6 +6,12 @@ const API_BASE_URL = process.env.REACT_APP_API_URL || '/api';
 
 // For the MVP, we'll use the local data loader
 // In production, these would be actual API calls
+const apiClient = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    'Content-Type': 'application/json'
+  }
+});
 
 // Get all domains with their status
 export const fetchDomains = async () => {

@@ -64,7 +64,9 @@ const Header = ({ lastUpdated, onSearch }) => {
                   onClick={handleRefresh}
                   disabled={isRefreshing}
                 >
-                  <FaSync className={isRefreshing ? 'spin' : ''} />
+                  <span className={isRefreshing ? 'spin-container' : ''}>
+                    <FaSync />
+                  </span>
                 </Button>
                 <span className="last-updated-text">
                   Last Updated: {moment(lastUpdated).format('YYYY-MM-DD HH:mm')}
