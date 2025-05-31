@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Row, Col, InputGroup, Form, Button } from 'react-bootstrap';
+import { Container, Row, Col, InputGroup, Form, Button } from 'react-bootstrap';
 import { FaSearch, FaSync } from 'react-icons/fa';
 import moment from 'moment';
 import { refreshDomainStatus } from '../utils/api';
@@ -28,41 +28,69 @@ const Header = ({ lastUpdated, onSearch }) => {
   };
 
   return (
-    <div className="dashboard-header">
-      <Row className="align-items-center mb-3">
-        <Col xs={12} md={6}>
-          <h1 className="dashboard-title">MNOS Blacklist Monitor</h1>
-        </Col>
-        <Col xs={12} md={6} className="d-flex justify-content-md-end mt-3 mt-md-0">
-          <div className="d-flex align-items-center">
-            <InputGroup className="me-2 search-container">
-              <InputGroup.Text>
-                <FaSearch />
-              </InputGroup.Text>
-              <Form.Control
-                placeholder="Search domains..."
-                value={searchTerm}
-                onChange={handleSearchChange}
-                aria-label="Search domains"
-              />
-            </InputGroup>
-            <div className="last-updated-container d-flex align-items-center">
-              <Button 
-                variant="link" 
-                className="refresh-button p-0 me-2" 
-                onClick={handleRefresh}
-                disabled={isRefreshing}
-              >
-                <FaSync className={isRefreshing ? 'spin' : ''} />
-              </Button>
-              <span className="last-updated-text">
-                Last Updated: {moment(lastUpdated).format('YYYY-MM-DD HH:mm')}
-              </span>
-            </div>
-          </div>
-        </Col>
-      </Row>
-    </div>
+    <>
+      <div className="gov-header">
+        <Container fluid className="px-4">
+          <Row>
+            <Col xs={12}>
+              <div className="gov-logos">
+                <div className="d-flex align-items-center">
+                  <img src="images/dict-logo.png" alt="DICT Logo" className="gov-logo" />
+                  <img src="images/cicc-logo.png" alt="CICC Logo" className="gov-logo" />
+                  <img src="images/npc-logo.png" alt="NPC Logo" className="gov-logo" />
+                  <img src="images/ntc-logo.png" alt="NTC Logo" className="gov-logo" />
+                </div>
+                <div className="d-none d-md-block">
+                  <p className="gov-title">REPUBLIC OF THE PHILIPPINES</p>
+                </div>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </div>
+
+      <div className="dashboard-header">
+        <Container fluid className="px-4">
+          <Row className="align-items-center mb-3">
+            <Col xs={12} md={8}>
+              <h1 className="dashboard-title">MNOS Blacklist Monitor</h1>
+              <p className="dashboard-subtitle">Real-time domain blocking status across Philippine Mobile Network Operators</p>
+            </Col>
+            <Col xs={12} md={4} className="text-md-end">
+              <div className="last-updated-container d-flex align-items-center justify-content-md-end">
+                <Button 
+                  variant="link" 
+                  className="refresh-button p-0 me-2" 
+                  onClick={handleRefresh}
+                  disabled={isRefreshing}
+                >
+                  <FaSync className={isRefreshing ? 'spin' : ''} />
+                </Button>
+                <span className="last-updated-text">
+                  Last Updated: {moment(lastUpdated).format('YYYY-MM-DD HH:mm')}
+                </span>
+              </div>
+            </Col>
+          </Row>
+          
+          <Row className="mt-4">
+            <Col xs={12}>
+              <InputGroup className="search-container w-100">
+                <InputGroup.Text>
+                  <FaSearch />
+                </InputGroup.Text>
+                <Form.Control
+                  placeholder="Search domains..."
+                  value={searchTerm}
+                  onChange={handleSearchChange}
+                  aria-label="Search domains"
+                />
+              </InputGroup>
+            </Col>
+          </Row>
+        </Container>
+      </div>
+    </>
   );
 };
 

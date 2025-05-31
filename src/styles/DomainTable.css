@@ -3,6 +3,11 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
+.domain-data-table th.status-cell,
+.domain-data-table th.sortable-header.status-cell {
+  text-align: center;
+}
+
 .table-title {
   color: #2c3e50;
   font-weight: 600;
@@ -30,7 +35,7 @@
 
 .status-cell {
   text-align: center;
-  width: 80px;
+  width: 120px;
 }
 
 .status-indicator {
@@ -69,13 +74,68 @@
     white-space: nowrap;
   }
   
-  /* For very small screens, hide less important columns */
-  @media (max-width: 576px) {
-    .domain-data-table th:nth-child(2),
-    .domain-data-table td:nth-child(2),
-    .domain-data-table th:nth-child(3),
-    .domain-data-table td:nth-child(3) {
-      display: none;
-    }
+  /* Add card view styling for mobile */
+  .domain-card {
+    border-left: 4px solid var(--primary-color);
+  }
+
+  .domain-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  .domain-name {
+    font-family: monospace;
+    font-weight: 600;
+    margin-bottom: 0;
+    font-size: 1rem;
+  }
+
+  .domain-time {
+    font-size: 0.75rem;
+    color: var(--secondary-color);
+  }
+
+  .website-name {
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .domain-category {
+    display: inline-block;
+    background-color: var(--light-bg);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    color: var(--secondary-color);
+  }
+
+  .status-grid {
+    display: grid;
+    gap: 10px;
+  }
+
+  .status-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+
+
+  .provider-label {
+    font-size: 0.85rem;
+    color: var(--secondary-color);
+    margin-bottom: 4px;
+  }
+
+  .status-value {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
   }
 }

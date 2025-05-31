@@ -5,7 +5,8 @@ import FilterBar from './components/FilterBar';
 import StatusSummary from './components/StatusSummary';
 import DomainTable from './components/DomainTable';
 import Legend from './components/Legend';
-import { fetchDomains, fetchStats, refreshDomainStatus } from './utils/api';
+import Footer from './components/Footer';
+import { fetchDomains, fetchStats } from './utils/api';
 import './styles/App.css';
 
 function App() {
@@ -55,18 +56,32 @@ function App() {
       result = result.filter(domain => domain.category === filters.category);
     }
 
-    // Apply status filter
-    if (filters.status !== 'All') {
-      result = result.filter(domain => {
-        const statuses = [domain.globe_status, domain.smart_status, domain.dito_status];
-        return statuses.includes(filters.status.toLowerCase());
-      });
+    // Combined MNOS and status filter
+    if (filters.mnos !== 'All' && filters.status !== 'All') {
+      const mnosKey = filters.mnos.toLowerCase();
+      const statusLower = filters.status.toLowerCase();
+      
+      result = result.filter(domain => 
+        domain[mnosKey] && domain[mnosKey].status === statusLower
+      );
+    }
+    
+    // MNOS filter only
+    else if (filters.mnos !== 'All') {
+      const mnosKey = filters.mnos.toLowerCase();
+      result = result.filter(domain => 
+        domain[mnosKey] && domain[mnosKey].status
+      );
     }
 
-    // Apply MNOS filter
-    if (filters.mnos !== 'All') {
-      const mnosKey = filters.mnos.toLowerCase() + '_status';
-      result = result.filter(domain => domain[mnosKey]);
+    // Status filter only
+    else if (filters.status !== 'All') {
+      const statusLower = filters.status.toLowerCase();
+      result = result.filter(domain => {
+        return (domain.globe && domain.globe.status === statusLower) ||
+              (domain.smart && domain.smart.status === statusLower) ||
+              (domain.dito && domain.dito.status === statusLower);
+      });
     }
 
     // Apply search filter
@@ -122,9 +137,9 @@ function App() {
 
   return (
     <div className="app">
-      <Container fluid className="px-4">
-        <Header lastUpdated={lastUpdated} onSearch={(value) => handleFilterChange('search', value)} />
-        
+      <Header lastUpdated={lastUpdated} onSearch={(value) => handleFilterChange('search', value)} />
+      
+      <Container fluid className="px-4 flex-grow-1">
         <FilterBar 
           filters={filters} 
           onFilterChange={handleFilterChange} 
@@ -136,10 +151,11 @@ function App() {
         <DomainTable 
           domains={filteredDomains} 
           isLoading={isLoading} 
+          filters={filters}
         />
-        
-        <Legend />
       </Container>
+      
+      <Footer />
     </div>
   );
 }
