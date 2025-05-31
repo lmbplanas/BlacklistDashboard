@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table, Spinner, Card } from 'react-bootstrap';
-import { FaSortUp, FaSortDown } from 'react-icons/fa';
 import StatusIndicator from './StatusIndicator';
+import { FaSortUp, FaSortDown } from 'react-icons/fa';
+import TablePagination from './TablePagination';
 import '../styles/DomainTable.css';
 
 const DomainTable = ({ domains, isLoading, filters }) => {
@@ -9,6 +10,31 @@ const DomainTable = ({ domains, isLoading, filters }) => {
     key: 'domain',
     direction: 'ascending'
   });
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [paginatedDomains, setPaginatedDomains] = useState([]);
+  const totalPages = Math.ceil(domains.length / itemsPerPage);
+
+  useEffect(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    setPaginatedDomains(getSortedDomains().slice(startIndex, endIndex));
+    
+    // Reset to first page when filters change
+    if (currentPage > totalPages && totalPages > 0) {
+      setCurrentPage(1);
+    }
+  }, [domains, currentPage, itemsPerPage, sortConfig]);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const handleItemsPerPageChange = (value) => {
+    setItemsPerPage(parseInt(value));
+    setCurrentPage(1); // Reset to first page
+  };
 
   // Handle sorting
   const requestSort = (key) => {
@@ -19,18 +45,48 @@ const DomainTable = ({ domains, isLoading, filters }) => {
     setSortConfig({ key, direction });
   };
 
-  // Get sorted domains
   const getSortedDomains = () => {
     const sortableItems = [...domains];
     if (sortConfig.key) {
       sortableItems.sort((a, b) => {
-        if (a[sortConfig.key] < b[sortConfig.key]) {
-          return sortConfig.direction === 'ascending' ? -1 : 1;
+        // Handle nested properties for MNOS status columns
+        if (sortConfig.key === 'globe_status' && a.globe && b.globe) {
+          if (a.globe.status < b.globe.status) {
+            return sortConfig.direction === 'ascending' ? -1 : 1;
+          }
+          if (a.globe.status > b.globe.status) {
+            return sortConfig.direction === 'ascending' ? 1 : -1;
+          }
+          return 0;
+        } 
+        else if (sortConfig.key === 'smart_status' && a.smart && b.smart) {
+          if (a.smart.status < b.smart.status) {
+            return sortConfig.direction === 'ascending' ? -1 : 1;
+          }
+          if (a.smart.status > b.smart.status) {
+            return sortConfig.direction === 'ascending' ? 1 : -1;
+          }
+          return 0;
         }
-        if (a[sortConfig.key] > b[sortConfig.key]) {
-          return sortConfig.direction === 'ascending' ? 1 : -1;
+        else if (sortConfig.key === 'dito_status' && a.dito && b.dito) {
+          if (a.dito.status < b.dito.status) {
+            return sortConfig.direction === 'ascending' ? -1 : 1;
+          }
+          if (a.dito.status > b.dito.status) {
+            return sortConfig.direction === 'ascending' ? 1 : -1;
+          }
+          return 0;
         }
-        return 0;
+        // Handle regular properties
+        else {
+          if (a[sortConfig.key] < b[sortConfig.key]) {
+            return sortConfig.direction === 'ascending' ? -1 : 1;
+          }
+          if (a[sortConfig.key] > b[sortConfig.key]) {
+            return sortConfig.direction === 'ascending' ? 1 : -1;
+          }
+          return 0;
+        }
       });
     }
     return sortableItems;
@@ -175,8 +231,8 @@ const DomainTable = ({ domains, isLoading, filters }) => {
                   </thead>
 
                   <tbody>
-                    {getSortedDomains().length > 0 ? (
-                      getSortedDomains().map((domain, index) => (
+                    {paginatedDomains.length > 0 ? (
+                      paginatedDomains.map((domain, index) => (
                         <tr key={index}>
                           <td className="domain-cell">{domain.domain}</td>
                           <td>{domain.website_name}</td>
@@ -195,7 +251,7 @@ const DomainTable = ({ domains, isLoading, filters }) => {
                       ))
                     ) : (
                       <tr>
-                        <td colSpan="7" className="text-center">
+                        <td colSpan={4 + getVisibleMnosCount()} className="text-center">
                           No domains match the current filters
                         </td>
                       </tr>
@@ -203,9 +259,25 @@ const DomainTable = ({ domains, isLoading, filters }) => {
                   </tbody>
                 </Table>
               </div>
+              <TablePagination 
+                currentPage={currentPage}
+                totalPages={totalPages}
+                itemsPerPage={itemsPerPage}
+                totalItems={domains.length}
+                onPageChange={handlePageChange}
+                onItemsPerPageChange={handleItemsPerPageChange}
+              />
             </div>
             <div className="d-md-none">
-              {renderCardView(getSortedDomains())}
+              {renderCardView(paginatedDomains)}
+              <TablePagination 
+                currentPage={currentPage}
+                totalPages={totalPages}
+                itemsPerPage={itemsPerPage}
+                totalItems={domains.length}
+                onPageChange={handlePageChange}
+                onItemsPerPageChange={handleItemsPerPageChange}
+              />
             </div>
             </>
           )}

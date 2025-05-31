@@ -43,8 +43,8 @@
 }
 
 @keyframes blink {
-  0%, 90% { opacity: 1; }
-  90%, 100% { opacity: 0; }
+  0%, 83.33% { opacity: 1; }
+  83.34%, 100% { opacity: 0; }
 }
 
 .status-overdue .icon {
