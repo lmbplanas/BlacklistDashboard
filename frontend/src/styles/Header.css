@@ -1,0 +1,113 @@
+.gov-header {
+  background-color: var(--primary-color);
+  color: var(--white);
+  padding: 10px 0;
+  margin: 0;
+}
+
+.gov-logos {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.gov-logo {
+  height: 40px;
+  margin-right: 15px;
+}
+
+.gov-title {
+  font-size: 0.9rem;
+  margin: 0;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+}
+
+.dashboard-header {
+  margin-bottom: 20px;
+  padding: 15px 0;
+}
+
+.dashboard-title {
+  color: var(--text-color);;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.dashboard-subtitle {
+  color: var(--secondary-color);
+  font-size: 1rem;
+  margin-bottom: 0;
+}
+
+.search-container {
+  max-width: 100%;
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+.last-updated-container {
+  display: flex;
+  align-items: center;
+  padding: 6px 12px;
+  color: var(--secondary-color);
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.refresh-button {
+  color: var(--primary-color);
+  font-size: 1.2rem;
+  padding: 4px !important; 
+  margin-right: 8px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.refresh-button:hover {
+  color: var(--text-color);
+}
+
+.last-updated-text {
+  font-weight: 500;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.spin-container {
+  display: inline-block;
+  animation: spin 1s linear infinite;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .gov-logo {
+    height: 30px;
+    margin-right: 8px;
+  }
+  
+  .dashboard-header {
+    text-align: center;
+    padding: 10px 0;
+  }
+  
+  .dashboard-subtitle {
+    font-size: 0.85rem;
+  }
+  
+  .search-container {
+    max-width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  .last-updated-container {
+    margin-left: 0;
+    justify-content: center;
+    width: auto;
+    margin: 10px auto 0;
+  }
+}
