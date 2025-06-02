@@ -1,0 +1,52 @@
+.status-indicator {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.2rem;
+  position: relative;
+}
+
+.status-blocked {
+  color: var(--success);
+}
+
+.status-pending {
+  color: var(--danger);
+}
+
+.status-overdue {
+  color: var(--warning);
+}
+
+.status-unknown {
+  color: var(--secondary-color);
+}
+
+.countdown {
+  font-size: 0.7rem;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.pending-text {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.overdue-text {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+@keyframes blink {
+  0%, 83.33% { opacity: 1; }
+  83.34%, 100% { opacity: 0; }
+}
+
+.status-overdue .icon {
+  animation: blink 3s step-end infinite;
+}

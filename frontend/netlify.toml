@@ -5,7 +5,7 @@
 # Make index-egov.html the main page
 [[redirects]]
   from = "/*"
-  to = "/index-egov.html"
+  to = "/index.html"
   status = 200
 
 # Also copy index-egov.html to index.html to ensure it loads as default
